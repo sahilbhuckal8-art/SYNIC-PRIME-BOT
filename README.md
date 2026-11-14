@@ -1,0 +1,2 @@
+# SYNIC-PRIME-BOT
+Official SYNIC PRIME BOT Mini App
