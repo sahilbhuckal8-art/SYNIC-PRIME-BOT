@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYNIC PRIME BOT</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090d18;color:white;font-family:Arial,sans-serif}
+header{padding:24px 18px;background:linear-gradient(135deg,#18254b,#11152b)}
+h1{margin:0;color:#ffd36b;font-size:25px}
+header p{color:#c5cbe0;margin-bottom:0}
+.balance{margin:18px;padding:22px;background:linear-gradient(120deg,#263b70,#171d38);border:1px solid #52618c;border-radius:18px}
+.balance small{color:#c4cbea}
+.balance h2{font-size:30px;margin:10px 0;color:#ffd36b}
+main{padding:0 16px 30px}
+h3{margin-top:25px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#171e32;border:1px solid #293654;padding:19px 12px;border-radius:15px;text-align:center}
+.card b{display:block;margin-top:9px}
+.card span{font-size:27px}
+button{background:#e9b94f;color:#17120a;border:0;border-radius:10px;padding:12px;font-weight:bold;width:100%;margin-top:12px}
+section{display:none}
+section.active{display:block}
+nav{position:fixed;bottom:0;left:0;right:0;background:#141b2d;display:flex;justify-content:space-around;padding:12px 3px;border-top:1px solid #35405b}
+nav button{background:transparent;color:white;font-size:12px;padding:7px 3px;margin:0}
+nav button.active{color:#ffd36b}
+.content{background:#171e32;padding:18px;border-radius:15px;margin-top:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>👑 SYNIC PRIME</h1>
+<p>Your Ultimate Gaming Companion</p>
+</header>
+
+<div class="balance">
+<small>💎 YOUR COIN BALANCE</small>
+<h2>0 Coins</h2>
+<small>Welcome to SYNIC PRIME BOT</small>
+</div>
+
+<main>
+<section id="home" class="active">
+<h3>⚡ Main Menu</h3>
+<div class="grid">
+<div class="card" onclick="show('coins')"><span>💎</span><b>Buy Coins</b></div>
+<div class="card" onclick="show('referral')"><span>🎁</span><b>Referral</b></div>
+<div class="card" onclick="show('orders')"><span>🛒</span><b>My Orders</b></div>
+<div class="card" onclick="show('support')"><span>🎧</span><b>Support</b></div>
+</div>
+<div class="content">
+<h3>👑 Welcome!</h3>
+<p>Explore coins, rewards and gaming services with SYNIC PRIME.</p>
+</div>
+</section>
+
+<section id="coins">
+<h3>💎 Buy Coins</h3>
+<div class="content">
+<p>Choose your coin package.</p>
+<button onclick="alert('Coin packages will be activated after backend setup.')">100 Coins</button>
+<button onclick="alert('Coin packages will be activated after backend setup.')">500 Coins</button>
+<button onclick="alert('Coin packages will be activated after backend setup.')">1000 Coins</button>
+</div>
+</section>
+
+<section id="referral">
+<h3>🎁 Referral & Earn</h3>
+<div class="content">
+<p>Invite friends and earn rewards.</p>
+<p>Your referral system will be connected soon.</p>
+<button onclick="alert('Referral link will be available after bot connection.')">Get Referral Link</button>
+</div>
+</section>
+
+<section id="orders">
+<h3>🛒 My Orders</h3>
+<div class="content">
+<p>No orders available yet.</p>
+</div>
+</section>
+
+<section id="support">
+<h3>🎧 Support</h3>
+<div class="content">
+<p>Need help? Contact SYNIC PRIME support.</p>
+<p>Support connection will be added soon.</p>
+</div>
+</section>
+</main>
+
+<nav>
+<button class="active" onclick="show('home',this)">🏠<br>Home</button>
+<button onclick="show('coins',this)">💎<br>Coins</button>
+<button onclick="show('referral',this)">🎁<br>Refer</button>
+<button onclick="show('orders',this)">🛒<br>Orders</button>
+<button onclick="show('support',this)">🎧<br>Help</button>
+</nav>
+
+<script>
+const tg=window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+function show(id,btn){
+document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn) btn.classList.add('active');
+else {
+const index=['home','coins','referral','orders','support'].indexOf(id);
+document.querySelectorAll('nav button')[index].classList.add('active');
+}
+}
+</script>
+</body>
+</html>
