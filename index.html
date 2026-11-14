@@ -15,7 +15,7 @@ header p{color:#c5cbe0;margin-bottom:0}
 .balance{margin:18px;padding:22px;background:linear-gradient(120deg,#263b70,#171d38);border:1px solid #52618c;border-radius:18px}
 .balance small{color:#c4cbea}
 .balance h2{font-size:30px;margin:10px 0;color:#ffd36b}
-main{padding:0 16px 30px}
+main{padding:0 16px 90px}
 h3{margin-top:25px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .card{background:#171e32;border:1px solid #293654;padding:19px 12px;border-radius:15px;text-align:center}
@@ -28,9 +28,13 @@ nav{position:fixed;bottom:0;left:0;right:0;background:#141b2d;display:flex;justi
 nav button{background:transparent;color:white;font-size:12px;padding:7px 3px;margin:0}
 nav button.active{color:#ffd36b}
 .content{background:#171e32;padding:18px;border-radius:15px;margin-top:12px}
+.stat{background:#202b47;padding:14px;border-radius:12px;margin:10px 0}
+.stat b{color:#ffd36b}
+.linkbox{background:#090d18;padding:12px;border-radius:10px;overflow-wrap:anywhere;color:#ffd36b;font-size:13px}
 </style>
 </head>
 <body>
+
 <header>
 <h1>👑 SYNIC PRIME</h1>
 <p>Your Ultimate Gaming Companion</p>
@@ -43,6 +47,7 @@ nav button.active{color:#ffd36b}
 </div>
 
 <main>
+
 <section id="home" class="active">
 <h3>⚡ Main Menu</h3>
 <div class="grid">
@@ -68,11 +73,36 @@ nav button.active{color:#ffd36b}
 </section>
 
 <section id="referral">
-<h3>🎁 Referral & Earn</h3>
+<h3>🎁 REFER & EARN</h3>
 <div class="content">
-<p>Invite friends and earn rewards.</p>
-<p>Your referral system will be connected soon.</p>
-<button onclick="alert('Referral link will be available after bot connection.')">Get Referral Link</button>
+<h3>👥 Invite Friends & Earn Rewards</h3>
+<p>🎁 Earn 1 coin for every 5 successful referrals!</p>
+
+<div class="stat">
+👥 Successful Referrals: <b id="refCount">0</b>
+</div>
+
+<div class="stat">
+🪙 Total Referral Earnings: <b id="refEarnings">0 COINS</b>
+</div>
+
+<div class="stat">
+📈 Progress: <b id="refProgress">0/5</b> referrals toward your next coin
+</div>
+
+<p>📨 Share your personal link with a friend.</p>
+<div class="linkbox" id="refLink">Opening in Telegram required</div>
+
+<button onclick="copyReferral()">📋 Copy Referral Link</button>
+<button onclick="shareReferral()">📤 Share Referral Link</button>
+
+<p style="font-size:12px;color:#aeb8d0">
+When a new user starts the bot through your link, the referral can be counted after backend verification.
+</p>
+
+<p style="font-size:12px;color:#e9b94f">
+⚠️ Self-referrals and duplicate referrals are not rewarded.
+</p>
 </div>
 </section>
 
@@ -90,6 +120,7 @@ nav button.active{color:#ffd36b}
 <p>Support connection will be added soon.</p>
 </div>
 </section>
+
 </main>
 
 <nav>
@@ -101,7 +132,7 @@ nav button.active{color:#ffd36b}
 </nav>
 
 <script>
-const tg=window.Telegram.WebApp;
+const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
@@ -115,6 +146,40 @@ const index=['home','coins','referral','orders','support'].indexOf(id);
 document.querySelectorAll('nav button')[index].classList.add('active');
 }
 }
+
+const user = tg.initDataUnsafe?.user;
+const referralLink = user
+? `https://t.me/SynicPrimeOfficialBot?start=ref_${user.id}`
+: '';
+
+document.getElementById('refLink').textContent =
+referralLink || 'Please open this app inside Telegram.';
+
+function copyReferral(){
+if(!referralLink){
+alert('Please open the Mini App inside Telegram.');
+return;
+}
+if(navigator.clipboard){
+navigator.clipboard.writeText(referralLink)
+.then(()=>alert('Referral link copied!'))
+.catch(()=>alert('Please copy the link manually: '+referralLink));
+}else{
+alert('Your referral link: '+referralLink);
+}
+}
+
+function shareReferral(){
+if(!referralLink){
+alert('Please open the Mini App inside Telegram.');
+return;
+}
+const shareUrl = 'https://t.me/share/url?url=' +
+encodeURIComponent(referralLink) +
+'&text=' + encodeURIComponent('Join SYNIC PRIME BOT and explore rewards!');
+tg.openTelegramLink(shareUrl);
+}
 </script>
+
 </body>
 </html>
